@@ -32,7 +32,14 @@ SimulationDataContainer::SimulationDataContainer(size_t num_cells,
                                                  size_t num_phases)
     : m_num_cells(num_cells),
       m_num_faces(num_faces),
-      m_num_phases(num_phases) {
+      m_num_phases(num_phases),
+      m_cell_data(),
+      m_face_data(),
+      pressure_ref_(),
+      temperature_ref_(),
+      saturation_ref_(),
+      facepressure_ref_(),
+      faceflux_ref_() {
   addDefaultFields();
 }
 
@@ -42,8 +49,13 @@ SimulationDataContainer::SimulationDataContainer(
       m_num_faces(other.m_num_faces),
       m_num_phases(other.m_num_phases),
       m_cell_data(other.m_cell_data),
-      m_face_data(other.m_face_data) {
-    setReferencePointers();
+      m_face_data(other.m_face_data),
+      pressure_ref_(),
+      temperature_ref_(),
+      saturation_ref_(),
+      facepressure_ref_(),
+      faceflux_ref_() {
+  setReferencePointers();
 }
 
 SimulationDataContainer& SimulationDataContainer::operator=(
