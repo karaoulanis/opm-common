@@ -190,7 +190,7 @@ class SimulationDataContainer {
    * @brief Get pressure (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline std::vector<double>& SimulationDataContainer::pressure() {
+  inline std::vector<double>& pressure() {
     return *pressure_ref_;
   }
 
@@ -198,7 +198,7 @@ class SimulationDataContainer {
    * @brief Get temperature (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline std::vector<double>& SimulationDataContainer::temperature() {
+  inline std::vector<double>& temperature() {
     return *temperature_ref_;
   }
 
@@ -206,7 +206,7 @@ class SimulationDataContainer {
    * @brief Get saturation (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline std::vector<double>& SimulationDataContainer::saturation() {
+  inline std::vector<double>& saturation() {
     return *saturation_ref_;
   }
 
@@ -214,7 +214,7 @@ class SimulationDataContainer {
    * @brief Get facepressure (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline std::vector<double>& SimulationDataContainer::facepressure() {
+  inline std::vector<double>& facepressure() {
     return *facepressure_ref_;
   }
 
@@ -222,7 +222,7 @@ class SimulationDataContainer {
    * @brief Get faceflux (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline std::vector<double>& SimulationDataContainer::faceflux() {
+  inline std::vector<double>& faceflux() {
     return *faceflux_ref_;
   }
 
@@ -230,7 +230,7 @@ class SimulationDataContainer {
    * @brief Get pressure (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline const std::vector<double>& SimulationDataContainer::pressure() const {
+  inline const std::vector<double>& pressure() const {
       return *pressure_ref_;
   }
 
@@ -238,8 +238,7 @@ class SimulationDataContainer {
    * @brief Get temperature (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline const std::vector<double>&
-      SimulationDataContainer::temperature() const {
+  inline const std::vector<double>& temperature() const {
     return *temperature_ref_;
   }
 
@@ -247,8 +246,7 @@ class SimulationDataContainer {
    * @brief Get saturation (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline const std::vector<double>&
-      SimulationDataContainer::saturation() const {
+  inline const std::vector<double>& saturation() const {
     return *saturation_ref_;
   }
 
@@ -256,8 +254,7 @@ class SimulationDataContainer {
    * @brief Get facepressure (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline const std::vector<double>&
-      SimulationDataContainer::facepressure() const {
+  inline const std::vector<double>& facepressure() const {
     return *facepressure_ref_;
   }
 
@@ -265,8 +262,7 @@ class SimulationDataContainer {
    * @brief Get faceflux (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
-  inline const std::vector<double>&
-      SimulationDataContainer::faceflux() const {
+  inline const std::vector<double>& faceflux() const {
     return *faceflux_ref_;
   }
 
