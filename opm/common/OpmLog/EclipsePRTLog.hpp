@@ -22,44 +22,42 @@
 
 #include <map>
 #include <string>
-#include <opm/common/OpmLog/StreamLog.hpp>
+#include "opm/common/OpmLog/StreamLog.hpp"
 
 namespace Opm {
-
 class EclipsePRTLog : public StreamLog {
+ public:
+  using StreamLog::StreamLog;
+  size_t numMessages(int64_t messageType) const;
 
-public:
-    using StreamLog::StreamLog;
+  ~EclipsePRTLog();
 
-    size_t numMessages(int64_t messageType) const;
+  /// \brief Construct a logger to the <MODLE>.PRT file
+  /// \param logFile The name of the logfile to use.
+  /// \param messageMask ????
+  /// \param append If true then we append messages to the file.
+  ///               Otherwise a new file is created.
+  /// \param print_summary If true print a summary to the PRT file.
+  EclipsePRTLog(const std::string& logFile , int64_t messageMask,
+                bool append, bool print_summary);
 
-    ~EclipsePRTLog();
+  /// \brief Construct a logger to the <MODLE>.PRT file
+  /// \param logFile The name of the logfile to use.
+  /// \param messageMask ????
+  /// \param append If true then we append messages to the file.
+  ///               Otherwise a new file is created.
+  /// \param print_summary If true print a summary to the PRT file.
+  EclipsePRTLog(std::ostream& os , int64_t messageMask,
+                bool print_summary);
 
-    /// \brief Construct a logger to the <MODLE>.PRT file
-    /// \param logFile The name of the logfile to use.
-    /// \param messageMask ????
-    /// \param append If true then we append messages to the file.
-    ///               Otherwise a new file is created.
-    /// \param print_summary If true print a summary to the PRT file.
-    EclipsePRTLog(const std::string& logFile , int64_t messageMask,
-                  bool append, bool print_summary);
+ protected:
+  void addMessageUnconditionally(int64_t messageType,
+                                 const std::string& message) override;
 
-    /// \brief Construct a logger to the <MODLE>.PRT file
-    /// \param logFile The name of the logfile to use.
-    /// \param messageMask ????
-    /// \param append If true then we append messages to the file.
-    ///               Otherwise a new file is created.
-    /// \param print_summary If true print a summary to the PRT file.
-    EclipsePRTLog(std::ostream& os , int64_t messageMask,
-                  bool print_summary);
-
-protected:
-    void addMessageUnconditionally(int64_t messageType, const std::string& message) override;
-
-private:
-    std::map<int64_t, size_t> m_count;
-    /// \brief Whether to print a summary to the log file.
-    bool print_summary_ = true;
+ private:
+  std::map<int64_t, size_t> m_count;
+  /// \brief Whether to print a summary to the log file.
+  bool print_summary_ = true;
 };
-}
-#endif // ECLIPSEPRTLOG_H
+}  // namespace Opm
+#endif  // ECLIPSEPRTLOG_H
