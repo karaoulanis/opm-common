@@ -36,7 +36,6 @@ StreamLog::StreamLog(const std::string& logFile , int64_t messageMask, bool appe
     m_ostream = &m_ofstream;
 }
 
-
 StreamLog::StreamLog(std::ostream& os , int64_t messageMask)
   : LogBackend(messageMask),
     m_ofstream(),

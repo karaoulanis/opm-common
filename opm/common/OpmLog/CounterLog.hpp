@@ -22,32 +22,29 @@
 #include <string>
 #include <memory>
 #include <map>
-
-#include <opm/common/OpmLog/LogBackend.hpp>
+#include "opm/common/OpmLog/LogBackend.hpp"
 
 namespace Opm {
 /*!
  * \brief Provides a simple sytem for log message which are found by the
  *        Parser/Deck/EclipseState classes during processing the deck.
  */
-    class CounterLog : public LogBackend
-    {
-    public:
-        CounterLog(int64_t messageMask);
-        CounterLog();
+class CounterLog : public LogBackend {
+ public:
+    explicit CounterLog(int64_t messageMask);
+    CounterLog();
 
-        size_t numMessages(int64_t messageType) const;
+    size_t numMessages(int64_t messageType) const;
 
-        void clear();
+    void clear();
 
-    protected:
-        void addMessageUnconditionally(int64_t messageFlag,
-                                       const std::string& message) override;
-    private:
-        std::map<int64_t , size_t> m_count;
-    };
-
-} // namespace Opm
+ protected:
+    void addMessageUnconditionally(int64_t messageFlag,
+                                   const std::string& message) override;
+ private:
+    std::map<int64_t , size_t> m_count;
+};
+}  // namespace Opm
 
 #endif
 

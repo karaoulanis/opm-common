@@ -16,48 +16,45 @@
   You should have received a copy of the GNU General Public License
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <stdexcept>
-#include <sstream>
+
+#include "opm/common/OpmLog/CounterLog.hpp"
 #include <cassert>
-
-#include <opm/common/OpmLog/OpmLog.hpp>
-#include <opm/common/OpmLog/LogUtil.hpp>
-#include <opm/common/OpmLog/CounterLog.hpp>
-
-
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include "opm/common/OpmLog/OpmLog.hpp"
+#include "opm/common/OpmLog/LogUtil.hpp"
 
 namespace Opm {
 
-CounterLog::CounterLog(int64_t messageTypes) : LogBackend(messageTypes)
-{ }
+CounterLog::CounterLog(int64_t messageTypes) : LogBackend(messageTypes) {
+}
 
-CounterLog::CounterLog() : LogBackend(Log::DefaultMessageTypes)
-{ }
-
+CounterLog::CounterLog() : LogBackend(Log::DefaultMessageTypes) {
+}
 
 size_t CounterLog::numMessages(int64_t messageType) const {
-    if (Log::isPower2( messageType )) {
-        auto iter = m_count.find( messageType );
-        if (iter == m_count.end())
+    if (Log::isPower2(messageType)) {
+        auto iter = m_count.find(messageType);
+        if (iter == m_count.end()) {
             return 0;
-        else
+        } else {
             return (*iter).second;
-    } else
+        }
+    } else {
         throw std::invalid_argument("The messageType ID must be 2^n");
+    }
 }
 
 
 
-void CounterLog::addMessageUnconditionally(int64_t messageType, const std::string& ) {
+void CounterLog::addMessageUnconditionally(int64_t messageType,
+                                           const std::string&) {
     m_count[messageType]++;
 }
 
 
-void CounterLog::clear()
-{
+void CounterLog::clear() {
     m_count.clear();
 }
-
-
-
-} // namespace Opm
+}  // namespace Opm
