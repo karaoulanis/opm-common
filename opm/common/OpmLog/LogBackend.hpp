@@ -18,7 +18,6 @@
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-
 #ifndef OPM_LOGBACKEND_HPP
 #define OPM_LOGBACKEND_HPP
 
@@ -29,61 +28,108 @@
 #include <memory>
 
 namespace Opm {
-/// Abstract interface class for log backends.
+/**
+ * @class LogBackend
+ * @file Abstract interface class for log backends.
+ * @brief 
+ */
 class LogBackend {
  public:
-  /// Construct with given message mask.
+  /**
+   * @brief Construct with given message mask.
+   * @param mask the mask of the log back end
+   */
   explicit LogBackend(int64_t mask);
 
-  /// Virtual destructor to enable inheritance.
+  /**
+   * @brief Virtual destructor to enable inheritance.
+   */
   virtual ~LogBackend();
 
-  /// Configure how formatMessage() will modify message strings.
+  /**
+   * @brief Configure how formatMessage() will modify message strings.
+   * @param formatter the string formatter
+   */
   void setMessageFormatter(
       std::shared_ptr<MessageFormatterInterface> formatter);
 
-  /// Configure how message tags will be used to limit messages.
+  /**
+   * @brief Configure how message tags will be used to limit messages.
+   * @param limiter The message limiter.
+   */
   void setMessageLimiter(std::shared_ptr<MessageLimiter> limiter);
 
-  /// Add a message to the backend if accepted by the message limiter.
+  /**
+   * @brief Add a message to the backend if accepted by the message limiter.
+   * @param messageFlag the message flag
+   * @param message the message
+   * @note The messageTag is assumed an empty string ("") in this case.
+   */
   void addMessage(int64_t messageFlag, const std::string& message);
 
-  /// Add a tagged message to the backend if accepted by the message limiter.
+  /**
+   * @brief Add a tagged message to the backend if accepted by the message limiter.
+   * @param messageFlag the message flag
+   * @param messageTag the message tag
+   * @param message the message
+   */
   void addTaggedMessage(int64_t messageFlag,
                         const std::string& messageTag,
                         const std::string& message);
 
-  /// The message mask types are specified in the
-  /// Opm::Log::MessageType namespace, in file LogUtils.hpp.
+
+  /**
+   * @brief Get the message mask.
+   * @return an integer as described in Opm::Log::MessageType namespace,
+   *         in file LogUtils.hpp.
+   * 
+   *         More specifically:
+   *         - Debug     =  1   Excessive information
+   *         - Note      =  2;  Information that should only go into print file
+   *         - Info      =  4;  Normal status information
+   *         - Warning   =  8;  Input anomaly - possible error
+   *         - Error     = 16;   Error in the input data - should probably exit
+   *         - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *         - Bug       = 64;   An inconsistent state has been encountered in
+   *                             the simulator - should probably exit.
+   */
   int64_t getMask() const;
 
  protected:
-  /// This is the method subclasses should override.
-  ///
-  /// Typically a subclass may filter, change, and output
-  /// messages based on configuration and the messageFlag.
+  /**
+   * @brief Add a message to the log.
+   * @param messageFlag the message flag
+   * @param message the message
+   * @note This is the method subclasses should override.
+   *       Typically a subclass may filter, change, and output
+   *       messages based on configuration and the messageFlag.
+   */
   virtual void addMessageUnconditionally(int64_t messageFlag,
                                          const std::string& message) = 0;
 
   /**
    * @brief Return decorated version of message depending on
    *        configureDecoration() arguments.
-   * @param messageFlag
-   * @param message
+   * @param messageFlag the message flag
+   * @param message the message
    * @return 
    */
   std::string formatMessage(int64_t messageFlag, const std::string& message);
 
  private:
-  /// Return true if all bits of messageFlag are also set in our mask,
-  /// and the message limiter returns a PrintMessage response.
+  /**
+   * @brief Check whether to include a message.
+   * @param messageFlag the message flag
+   * @param message the message
+   * @return True if all bits of messageFlag are also set in our mask,
+   *         and the message limiter returns a PrintMessage response.
+   */
   bool includeMessage(int64_t messageFlag, const std::string& messageTag);
 
-  int64_t m_mask;
-  std::shared_ptr<MessageFormatterInterface> m_formatter;
-  std::shared_ptr<MessageLimiter> m_limiter;
+  int64_t m_mask;  //!< the message mask
+  std::shared_ptr<MessageFormatterInterface>
+      m_formatter;  //!< the message formatter
+  std::shared_ptr<MessageLimiter> m_limiter;  //!< the message limiter
 };
 }  // namespace Opm
-
-
 #endif
