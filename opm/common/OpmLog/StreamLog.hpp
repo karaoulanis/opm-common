@@ -30,15 +30,30 @@ namespace Opm {
 
 class StreamLog : public LogBackend {
 
-public:
-    StreamLog(const std::string& logFile , int64_t messageMask, bool append = false);
-    StreamLog(std::ostream& os , int64_t messageMask);
-    ~StreamLog();
+ public:
+  StreamLog(const std::string& logFile , int64_t messageMask, bool append = false);
+  StreamLog(std::ostream& os , int64_t messageMask);
+  /**
+   * @brief Explicitely disallow copy constructor.
+   * @note No implementation is given.
+   */
+  StreamLog(const StreamLog&);
 
-protected:
-    virtual void addMessageUnconditionally(int64_t messageType, const std::string& message) override;
+  /**
+   * @brief Explicitely disallow copy assignement.
+   * @note No implementation is given.
+   */
+  void operator=(const StreamLog&);
 
-private:
+  /**
+   * @brief Desructor.
+   */
+  ~StreamLog();
+
+ protected:
+  virtual void addMessageUnconditionally(int64_t messageType, const std::string& message) override;
+
+ private:
     void close();
 
     std::ofstream   m_ofstream;
