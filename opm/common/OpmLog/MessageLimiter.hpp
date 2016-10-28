@@ -53,6 +53,7 @@ namespace Opm
         /// to obtain that behaviour.
         explicit MessageLimiter(const int tag_limit)
             : tag_limit_(tag_limit < 0 ? NoLimit : tag_limit),
+              tag_counts_(),
               category_limits_({{Log::MessageType::Note, NoLimit},
                                 {Log::MessageType::Info, NoLimit},
                                 {Log::MessageType::Warning, NoLimit},
@@ -64,6 +65,7 @@ namespace Opm
 
         MessageLimiter(const int tag_limit, const std::map<int64_t, int> category_limits)
             : tag_limit_(tag_limit < 0 ? NoLimit : tag_limit),
+              tag_counts_(),
               category_limits_(category_limits)
         {
             // Must ensure NoLimit for categories that are not

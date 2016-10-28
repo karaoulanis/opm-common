@@ -24,7 +24,9 @@
 
 namespace Opm {
 LogBackend::LogBackend(int64_t mask) :
-  m_mask(mask) {
+  m_mask(mask),
+  m_formatter(),
+  m_limiter() {
 }
 
 LogBackend::~LogBackend() {
