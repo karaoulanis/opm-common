@@ -17,20 +17,20 @@
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include <stdexcept>
-#include <opm/common/OpmLog/StreamLog.hpp>
+#include <string>
+#include "opm/common/OpmLog/StreamLog.hpp"
 
 namespace Opm {
-
-
-StreamLog::StreamLog(const std::string& logFile , int64_t messageMask, bool append)
+StreamLog::StreamLog(const std::string& logFile, int64_t messageMask,
+                     bool append)
   : LogBackend(messageMask),
     m_ofstream(),
     m_ostream(nullptr),
     m_streamOwner() {
     if (append) {
-        m_ofstream.open( logFile.c_str(),  std::ofstream::app);
+        m_ofstream.open(logFile.c_str(), std::ofstream::app);
     } else {
-        m_ofstream.open( logFile.c_str(),  std::ofstream::out);
+        m_ofstream.open(logFile.c_str(), std::ofstream::out);
     }
     m_streamOwner = true;
     m_ostream = &m_ofstream;
@@ -50,8 +50,8 @@ void StreamLog::close() {
     }
 }
 
-void StreamLog::addMessageUnconditionally(int64_t messageType, const std::string& message)
-{
+void StreamLog::addMessageUnconditionally(int64_t messageType,
+                                          const std::string& message) {
     (*m_ostream) << formatMessage(messageType, message) << std::endl;
     if (m_ofstream.is_open()) {
         m_ofstream.flush();
@@ -62,5 +62,4 @@ void StreamLog::addMessageUnconditionally(int64_t messageType, const std::string
 StreamLog::~StreamLog() {
     close();
 }
-
-} // namespace Opm
+}  // namespace Opm

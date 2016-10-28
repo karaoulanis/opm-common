@@ -20,19 +20,30 @@
 #ifndef STREAMLOG_H
 #define STREAMLOG_H
 
+#include <cstdint>
 #include <fstream>
 #include <iostream>
-#include <cstdint>
-
-#include <opm/common/OpmLog/LogBackend.hpp>
+#include <string>
+#include "opm/common/OpmLog/LogBackend.hpp"
 
 namespace Opm {
-
 class StreamLog : public LogBackend {
-
  public:
-  StreamLog(const std::string& logFile , int64_t messageMask, bool append = false);
+  /**
+   * @brief Constructor
+   * @param messageMask the message mask
+   * @param append whether to append on the existing stream
+   */
+  StreamLog(const std::string& logFile , int64_t messageMask,
+            bool append = false);
+
+  /**
+   * @brief Constructor
+   * @param os the output stream used for logging
+   * @param messageMask the message mask
+   */
   StreamLog(std::ostream& os , int64_t messageMask);
+
   /**
    * @brief Explicitely disallow copy constructor.
    * @note No implementation is given.
@@ -51,15 +62,26 @@ class StreamLog : public LogBackend {
   ~StreamLog();
 
  protected:
-  virtual void addMessageUnconditionally(int64_t messageType, const std::string& message) override;
+  /**
+   * @brief Add a message to the log.
+   * @param messageType the message flag
+   * @param message the message
+   * @note This is the method subclasses should override.
+   *       Typically a subclass may filter, change, and output
+   *       messages based on configuration and the messageType.
+   */
+  void addMessageUnconditionally(int64_t messageType,
+                                 const std::string& message) override;
 
  private:
+    /**
+     * @brief Close stream.
+     */
     void close();
-
-    std::ofstream   m_ofstream;
-    std::ostream  * m_ostream;
-    bool m_streamOwner;
+    std::ofstream  m_ofstream;  //!< the output file stream
+    std::ostream* m_ostream;  //!< the output stream
+    bool m_streamOwner;  //!< whether the instance owns the stream
 };
-}
-
+}  // namespace Opm
 #endif
+
