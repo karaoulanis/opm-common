@@ -52,6 +52,6 @@
 // "#pragma GCC diagnostic" syntax.
 #if COMPATIBLE_COMPILER
 #pragma GCC diagnostic pop
-#endif // COMPATIBLE_COMPILER
+#endif  // COMPATIBLE_COMPILER
 
-#endif // SILENCE_EXTERNAL_WARNINGS
+#endif  // SILENCE_EXTERNAL_WARNINGS

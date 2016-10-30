@@ -20,25 +20,21 @@
 #ifndef OPMLOG_HPP
 #define OPMLOG_HPP
 
-#include <memory>
 #include <cstdint>
-
-#include <opm/common/OpmLog/Logger.hpp>
-#include <opm/common/OpmLog/LogUtil.hpp>
+#include <memory>
+#include <string>
+#include "opm/common/OpmLog/Logger.hpp"
+#include "opm/common/OpmLog/LogUtil.hpp"
 
 namespace Opm {
-
-    class LogBackend;
+class LogBackend;
 
 /*
   The OpmLog class is a fully static class which manages a proper
   Logger instance.
 */
-
-
 class OpmLog {
-
-public:
+ public:
     static void addMessage(int64_t messageFlag , const std::string& message);
     static void addTaggedMessage(int64_t messageFlag, const std::string& tag, const std::string& message);
 
@@ -58,12 +54,12 @@ public:
     static void debug(const std::string& tag, const std::string& message);
     static void note(const std::string& tag, const std::string& message);
 
-    static bool hasBackend( const std::string& backendName );
+    static bool hasBackend(const std::string& backendName);
     static void addBackend(const std::string& name , std::shared_ptr<LogBackend> backend);
     static bool removeBackend(const std::string& name);
     static void removeAllBackends();
-    static bool enabledMessageType( int64_t messageType );
-    static void addMessageType( int64_t messageType , const std::string& prefix);
+    static bool enabledMessageType(int64_t messageType);
+    static void addMessageType(int64_t messageType , const std::string& prefix);
     static void setupSimpleDefaultLogging(const bool use_prefix);
 
     template <class BackendType>
@@ -78,14 +74,11 @@ public:
         return logger->popBackend<BackendType>(name);
     }
 
-
-private:
+ private:
     static std::shared_ptr<Logger> getLogger();
     static std::shared_ptr<Logger> m_logger;
 };
-
-
-}
+}  // namespace Opm
 
 
 

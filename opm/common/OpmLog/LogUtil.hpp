@@ -25,7 +25,7 @@
 
 namespace Opm {
 namespace Log {
-    namespace MessageType {
+namespace MessageType {
         const int64_t Debug     =  1;   /* Excessive information */
         const int64_t Note      =  2;  /* Information that should only go into print file.*/
         const int64_t Info      =  4;   /* Normal status information */
@@ -41,7 +41,7 @@ namespace Log {
 
     /// Terminal codes for ANSI/vt100 compatible terminals.
     /// See for example http://ascii-table.com/ansi-escape-sequences.php
-    namespace AnsiTerminalColors {
+namespace AnsiTerminalColors {
         const std::string none = "\033[0m";
         const std::string red = "\033[31m";
         const std::string red_strong = "\033[31;1m";
@@ -59,7 +59,7 @@ namespace Log {
     std::string prefixMessage(int64_t messageType , const std::string& msg);
     std::string colorCodeMessage(int64_t messageType , const std::string& msg);
 
-}
-}
+}  // namespace Log
+}  // namespace Opm
 
 #endif

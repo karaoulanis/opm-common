@@ -113,7 +113,7 @@ bool Logger::enabledDefaultMessageType(int64_t messageType) {
 }
 
 bool Logger::enabledMessageType(int64_t messageType) const {
-  return enabledMessageType(m_enabledTypes , messageType);
+  return enabledMessageType(m_enabledTypes, messageType);
 }
 
 

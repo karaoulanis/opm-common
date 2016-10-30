@@ -29,14 +29,14 @@
 namespace Opm {
 
 TimerLog::TimerLog(const std::string& logFile)
-  : StreamLog(logFile , StopTimer | StartTimer),
+  : StreamLog(logFile, StopTimer | StartTimer),
     m_start(),
     m_work() {
     m_work.precision(8);
 }
 
 TimerLog::TimerLog(std::ostream& os)
-  : StreamLog(os , StopTimer | StartTimer),
+  : StreamLog(os, StopTimer | StartTimer),
     m_start(),
     m_work() {
     m_work.precision(8);

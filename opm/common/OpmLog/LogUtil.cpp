@@ -30,7 +30,7 @@ namespace Log {
 
 
 
-    std::string fileMessage(const std::string& filename , int line , const std::string& message) {
+    std::string fileMessage(const std::string& filename, int line, const std::string& message) {
         std::ostringstream oss;
 
         oss << message << "\n" << "In file " << filename << ", line " << line << "\n";
@@ -38,8 +38,8 @@ namespace Log {
         return oss.str();
     }
 
-    std::string fileMessage(int64_t messageType , const std::string& filename , int line , const std::string& message) {
-        return fileMessage( filename , line , prefixMessage( messageType , message ));
+    std::string fileMessage(int64_t messageType, const std::string& filename, int line, const std::string& message) {
+        return fileMessage(filename, line, prefixMessage(messageType, message));
     }
 
 
