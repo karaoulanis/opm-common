@@ -16,6 +16,12 @@
   You should have received a copy of the GNU General Public License
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+/**
+ *  A simple system for log message which are found by the
+ *  Parser/Deck/EclipseState classes during processing the deck.
+ */
+
 #ifndef OPM_COUNTERLOG_HPP
 #define OPM_COUNTERLOG_HPP
 
@@ -25,26 +31,22 @@
 #include "opm/common/OpmLog/LogBackend.hpp"
 
 namespace Opm {
-/*!
- * \brief Provides a simple sytem for log message which are found by the
+/**
+ * @brief Provides a simple system for log message which are found by the
  *        Parser/Deck/EclipseState classes during processing the deck.
  */
 class CounterLog : public LogBackend {
  public:
-    explicit CounterLog(int64_t messageMask);
-    CounterLog();
-
-    size_t numMessages(int64_t messageType) const;
-
-    void clear();
+  explicit CounterLog(int64_t messageMask);
+  CounterLog();
+  size_t numMessages(int64_t messageType) const;
+  void clear();
 
  protected:
-    void addMessageUnconditionally(int64_t messageFlag,
-                                   const std::string& message) override;
+  void addMessageUnconditionally(int64_t messageFlag,
+                                const std::string& message) override;
  private:
     std::map<int64_t , size_t> m_count;
 };
 }  // namespace Opm
-
 #endif
-

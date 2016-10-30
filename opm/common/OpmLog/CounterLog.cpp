@@ -26,35 +26,35 @@
 #include "opm/common/OpmLog/LogUtil.hpp"
 
 namespace Opm {
-
-CounterLog::CounterLog(int64_t messageTypes) : LogBackend(messageTypes) {
+CounterLog::CounterLog()
+  : LogBackend(Log::DefaultMessageTypes),
+    m_count() {
 }
 
-CounterLog::CounterLog() : LogBackend(Log::DefaultMessageTypes) {
+CounterLog::CounterLog(int64_t messageTypes)
+  : LogBackend(messageTypes),
+    m_count() {
 }
 
 size_t CounterLog::numMessages(int64_t messageType) const {
-    if (Log::isPower2(messageType)) {
-        auto iter = m_count.find(messageType);
-        if (iter == m_count.end()) {
-            return 0;
-        } else {
-            return (*iter).second;
-        }
+  if (Log::isPower2(messageType)) {
+    auto iter = m_count.find(messageType);
+    if (iter == m_count.end()) {
+      return 0;
     } else {
-        throw std::invalid_argument("The messageType ID must be 2^n");
+      return (*iter).second;
     }
+  } else {
+    throw std::invalid_argument("The messageType ID must be 2^n");
+  }
 }
-
-
 
 void CounterLog::addMessageUnconditionally(int64_t messageType,
                                            const std::string&) {
-    m_count[messageType]++;
+  m_count[messageType]++;
 }
 
-
 void CounterLog::clear() {
-    m_count.clear();
+  m_count.clear();
 }
 }  // namespace Opm
