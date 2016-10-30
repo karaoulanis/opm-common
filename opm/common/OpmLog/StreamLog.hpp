@@ -17,6 +17,9 @@
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+/** The stream log class.
+ */
+
 #ifndef STREAMLOG_H
 #define STREAMLOG_H
 
