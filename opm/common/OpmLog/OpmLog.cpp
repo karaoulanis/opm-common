@@ -21,27 +21,29 @@
 #include <opm/common/OpmLog/Logger.hpp>
 #include <opm/common/OpmLog/StreamLog.hpp>
 #include <iostream>
+#include <memory>
+#include <string>
 
 namespace Opm {
 
 
     std::shared_ptr<Logger> OpmLog::getLogger() {
         if (!m_logger)
-            m_logger.reset( new Logger() );
+            m_logger.reset(new Logger());
 
         return m_logger;
     }
 
 
-    void OpmLog::addMessage(int64_t messageFlag , const std::string& message) {
+    void OpmLog::addMessage(int64_t messageFlag, const std::string& message) {
         if (m_logger)
-            m_logger->addMessage( messageFlag , message );
+            m_logger->addMessage(messageFlag, message);
     }
 
 
     void OpmLog::addTaggedMessage(int64_t messageFlag, const std::string& tag, const std::string& message) {
         if (m_logger)
-            m_logger->addTaggedMessage( messageFlag, tag, message );
+            m_logger->addTaggedMessage(messageFlag, tag, message);
     }
 
 
@@ -74,7 +76,7 @@ namespace Opm {
         addMessage(Log::MessageType::Bug, message);
     }
 
-    
+
     void OpmLog::debug(const std::string& message)
     {
         addMessage(Log::MessageType::Debug, message);
@@ -133,16 +135,16 @@ namespace Opm {
 
 
 
-    bool OpmLog::enabledMessageType( int64_t messageType ) {
+    bool OpmLog::enabledMessageType(int64_t messageType) {
         if (m_logger)
-            return m_logger->enabledMessageType( messageType );
+            return m_logger->enabledMessageType(messageType);
         else
-            return Logger::enabledDefaultMessageType( messageType );
+            return Logger::enabledDefaultMessageType(messageType);
     }
 
     bool OpmLog::hasBackend(const std::string& name) {
         if (m_logger)
-            return m_logger->hasBackend( name );
+            return m_logger->hasBackend(name);
         else
             return false;
     }
@@ -150,7 +152,7 @@ namespace Opm {
 
     bool OpmLog::removeBackend(const std::string& name) {
         if (m_logger)
-            return m_logger->removeBackend( name );
+            return m_logger->removeBackend(name);
         else
             return false;
     }
@@ -163,15 +165,15 @@ namespace Opm {
     }
 
 
-    void OpmLog::addMessageType( int64_t messageType , const std::string& prefix) {
+    void OpmLog::addMessageType(int64_t messageType, const std::string& prefix) {
         auto logger = OpmLog::getLogger();
-        logger->addMessageType( messageType , prefix );
+        logger->addMessageType(messageType, prefix);
     }
 
 
-    void OpmLog::addBackend(const std::string& name , std::shared_ptr<LogBackend> backend) {
+    void OpmLog::addBackend(const std::string& name, std::shared_ptr<LogBackend> backend) {
         auto logger = OpmLog::getLogger();
-        return logger->addBackend( name , backend );
+        return logger->addBackend(name, backend);
     }
 
 
@@ -179,11 +181,11 @@ namespace Opm {
     void OpmLog::setupSimpleDefaultLogging(const bool use_prefix)
     {
          std::shared_ptr<StreamLog> streamLog = std::make_shared<StreamLog>(std::cout, Log::DefaultMessageTypes);
-         OpmLog::addBackend( "SimpleDefaultLog", streamLog);
+         OpmLog::addBackend("SimpleDefaultLog", streamLog);
          streamLog->setMessageLimiter(std::make_shared<MessageLimiter>(10));
          streamLog->setMessageFormatter(std::make_shared<SimpleMessageFormatter>(use_prefix, true));
     }
 /******************************************************************/
 
     std::shared_ptr<Logger> OpmLog::m_logger;
-}
+}  // namespace Opm

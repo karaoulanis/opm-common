@@ -17,15 +17,13 @@
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include <sstream>
-#include <stdexcept>
 #include <opm/common/OpmLog/LogUtil.hpp>
-
+#include <stdexcept>
+#include <string>
+#include <sstream>
 
 namespace Opm {
-
 namespace Log {
-
     bool isPower2(int64_t x) {
         return ((x != 0) && !(x & (x - 1)));
     }
@@ -82,7 +80,7 @@ namespace Log {
         case MessageType::Debug:
         case MessageType::Note:
         case MessageType::Info:
-            return message; // No color coding, not even the code for default color.
+            return message;  // No color coding, not even the code for default color.
         case MessageType::Warning:
             return AnsiTerminalColors::blue_strong + message + AnsiTerminalColors::none;
         case MessageType::Error:
@@ -93,6 +91,5 @@ namespace Log {
             throw std::invalid_argument("Unhandled messagetype");
         }
     }
-
-}
-}
+}  // namespace Log
+}  // namespace Opm

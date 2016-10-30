@@ -16,45 +16,43 @@
   You should have received a copy of the GNU General Public License
   along with OPM.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include <stdexcept>
-#include <cassert>
+
+#include "opm/common/OpmLog/TimerLog.hpp"
 #include <iomanip>
-
-#include <opm/common/OpmLog/OpmLog.hpp>
-#include <opm/common/OpmLog/LogUtil.hpp>
-#include <opm/common/OpmLog/TimerLog.hpp>
-#include <opm/common/OpmLog/StreamLog.hpp>
-
-
+#include <cassert>
+#include <stdexcept>
+#include <string>
+#include "opm/common/OpmLog/OpmLog.hpp"
+#include "opm/common/OpmLog/LogUtil.hpp"
+#include "opm/common/OpmLog/StreamLog.hpp"
 
 namespace Opm {
 
-TimerLog::TimerLog(const std::string& logFile) : StreamLog( logFile , StopTimer | StartTimer )
-{
+TimerLog::TimerLog(const std::string& logFile)
+  : StreamLog(logFile , StopTimer | StartTimer),
+    m_start(),
+    m_work() {
     m_work.precision(8);
 }
 
-TimerLog::TimerLog(std::ostream& os) : StreamLog( os , StopTimer | StartTimer )
-{
+TimerLog::TimerLog(std::ostream& os)
+  : StreamLog(os , StopTimer | StartTimer),
+    m_start(),
+    m_work() {
     m_work.precision(8);
 }
 
-
-
-void TimerLog::addMessageUnconditionally(int64_t messageType, const std::string& msg ) {
-    if (messageType == StopTimer) {
-        clock_t stop = clock();
-        double secondsElapsed = 1.0 * (m_start - stop) / CLOCKS_PER_SEC ;
-
-        m_work.str("");
-        m_work << std::fixed << msg << ": " << secondsElapsed << " seconds ";
-        StreamLog::addMessageUnconditionally( messageType, m_work.str());
-    } else {
-        if (messageType == StartTimer)
-            m_start = clock();
+void TimerLog::addMessageUnconditionally(int64_t messageType, const std::string& msg) {
+  if (messageType == StopTimer) {
+    clock_t stop = clock();
+    double secondsElapsed = 1.0 * (m_start - stop) / CLOCKS_PER_SEC;
+    m_work.str("");
+    m_work << std::fixed << msg << ": " << secondsElapsed << " seconds ";
+    StreamLog::addMessageUnconditionally(messageType, m_work.str());
+  } else {
+    if (messageType == StartTimer) {
+      m_start = clock();
     }
+  }
 }
-
-
-
-} // namespace Opm
+}  // namespace Opm
