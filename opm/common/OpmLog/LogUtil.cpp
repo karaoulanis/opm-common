@@ -24,72 +24,67 @@
 
 namespace Opm {
 namespace Log {
-    bool isPower2(int64_t x) {
-        return ((x != 0) && !(x & (x - 1)));
-    }
+bool isPower2(int64_t x) {
+  return ((x != 0) && !(x & (x - 1)));
+}
 
+std::string fileMessage(const std::string& filename, int line,
+                        const std::string& message) {
+  std::ostringstream oss;
+  oss << message << "\n" << "In file " << filename << ", line " << line << "\n";
+  return oss.str();
+}
 
+std::string fileMessage(int64_t messageType, const std::string& filename,
+                        int line, const std::string& message) {
+  return fileMessage(filename, line, prefixMessage(messageType, message));
+}
 
-    std::string fileMessage(const std::string& filename, int line, const std::string& message) {
-        std::ostringstream oss;
+std::string prefixMessage(int64_t messageType, const std::string& message) {
+  std::string prefix;
+  switch (messageType) {
+  case MessageType::Debug:
+    prefix = "Debug";
+    break;
+  case MessageType::Note:
+    prefix = "Note";
+    break;
+  case MessageType::Info:
+    prefix = "Info";
+    break;
+  case MessageType::Warning:
+    prefix = "Warning";
+    break;
+  case MessageType::Error:
+    prefix = "Error";
+    break;
+  case MessageType::Problem:
+    prefix = "Problem";
+    break;
+  case MessageType::Bug:
+    prefix = "Bug";
+    break;
+  default:
+    throw std::invalid_argument("Unhandled messagetype");
+  }
+  return prefix + ": " + message;
+}
 
-        oss << message << "\n" << "In file " << filename << ", line " << line << "\n";
-
-        return oss.str();
-    }
-
-    std::string fileMessage(int64_t messageType, const std::string& filename, int line, const std::string& message) {
-        return fileMessage(filename, line, prefixMessage(messageType, message));
-    }
-
-
-    std::string prefixMessage(int64_t messageType, const std::string& message) {
-        std::string prefix;
-        switch (messageType) {
-        case MessageType::Debug:
-            prefix = "Debug";
-            break;
-        case MessageType::Note:
-            prefix = "Note";
-            break;
-        case MessageType::Info:
-            prefix = "Info";
-            break;
-        case MessageType::Warning:
-            prefix = "Warning";
-            break;
-        case MessageType::Error:
-            prefix = "Error";
-            break;
-        case MessageType::Problem:
-            prefix = "Problem";
-            break;
-        case MessageType::Bug:
-            prefix = "Bug";
-            break;
-        default:
-            throw std::invalid_argument("Unhandled messagetype");
-        }
-
-        return prefix + ": " + message;
-    }
-
-
-    std::string colorCodeMessage(int64_t messageType, const std::string& message) {
-        switch (messageType) {
-        case MessageType::Debug:
-        case MessageType::Note:
-        case MessageType::Info:
-            return message;  // No color coding, not even the code for default color.
-        case MessageType::Warning:
-            return AnsiTerminalColors::blue_strong + message + AnsiTerminalColors::none;
-        case MessageType::Error:
-        case MessageType::Problem:
-        case MessageType::Bug:
-            return AnsiTerminalColors::red_strong + message + AnsiTerminalColors::none;
-        default:
-            throw std::invalid_argument("Unhandled messagetype");
-        }
-    }
+std::string colorCodeMessage(int64_t messageType, const std::string& message) {
+  switch (messageType) {
+  case MessageType::Debug:
+  case MessageType::Note:
+  case MessageType::Info:
+    return message;  // No color coding, not even the code for default color.
+  case MessageType::Warning:
+    return AnsiTerminalColors::blue_strong + message + AnsiTerminalColors::none;
+  case MessageType::Error:
+  case MessageType::Problem:
+  case MessageType::Bug:
+    return AnsiTerminalColors::red_strong + message + AnsiTerminalColors::none;
+  default:
+    throw std::invalid_argument("Unhandled messagetype");
+  }
+}
 }  // namespace Log
 }  // namespace Opm

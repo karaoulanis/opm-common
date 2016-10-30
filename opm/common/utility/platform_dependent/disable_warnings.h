@@ -18,7 +18,6 @@
 */
 
 // Note: this file shall not have include guards or #pragma once.
-
 #ifdef SILENCE_EXTERNAL_WARNINGS
 
 // To use this feature, we must have sufficiently new compiler.
@@ -54,8 +53,10 @@
 // "#pragma GCC diagnostic" syntax.
 #if COMPATIBLE_COMPILER
 #pragma GCC diagnostic push
-// Suppress warnings: "unknown option after ‘#pragma GCC diagnostic’ kind [-Wpragmas]".
-// This is necessary because not all the compilers have the same warning options.
+// Suppress warnings:
+//   "unknown option after ‘#pragma GCC diagnostic’ kind [-Wpragmas]".
+// This is necessary because not all the compilers have the same warning
+// options.
 #pragma GCC diagnostic ignored "-Wpragmas"
 #pragma GCC diagnostic ignored "-Wdeprecated-declarations"
 #pragma GCC diagnostic ignored "-Wdeprecated-register"

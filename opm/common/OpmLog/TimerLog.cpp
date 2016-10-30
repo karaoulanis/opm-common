@@ -42,7 +42,8 @@ TimerLog::TimerLog(std::ostream& os)
     m_work.precision(8);
 }
 
-void TimerLog::addMessageUnconditionally(int64_t messageType, const std::string& msg) {
+void TimerLog::addMessageUnconditionally(int64_t messageType,
+                                         const std::string& msg) {
   if (messageType == StopTimer) {
     clock_t stop = clock();
     double secondsElapsed = 1.0 * (m_start - stop) / CLOCKS_PER_SEC;
