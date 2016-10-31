@@ -66,7 +66,8 @@ const double default_rel_epsilon = 1e-5;
 template<typename T>
 bool scalar_equal(T value1, T value2, T abs_eps, T rel_eps) {
   static_assert(std::is_floating_point<T>::value,
-    "Function scalar_equal() A can only be instantiated with floating point types");
+    "Function scalar_equal() A "
+    "can only be instantiated with floating point types");
   bool equal = true;
   T diff = std::fabs(value1 - value2);
   if (diff > abs_eps) {
