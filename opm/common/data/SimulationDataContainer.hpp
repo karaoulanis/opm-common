@@ -54,6 +54,7 @@ class SimulationDataContainer {
    *                    number
    * @deprecated @p num_phases behaviour and argument
    */
+  __attribute__((deprecated))
   SimulationDataContainer(size_t num_cells, size_t num_faces,
                           size_t num_phases);
 
@@ -190,6 +191,7 @@ class SimulationDataContainer {
    * @brief Get pressure (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline std::vector<double>& pressure() {
     return *pressure_ref_;
   }
@@ -198,6 +200,7 @@ class SimulationDataContainer {
    * @brief Get temperature (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline std::vector<double>& temperature() {
     return *temperature_ref_;
   }
@@ -206,6 +209,7 @@ class SimulationDataContainer {
    * @brief Get saturation (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline std::vector<double>& saturation() {
     return *saturation_ref_;
   }
@@ -214,6 +218,7 @@ class SimulationDataContainer {
    * @brief Get facepressure (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline std::vector<double>& facepressure() {
     return *facepressure_ref_;
   }
@@ -222,6 +227,7 @@ class SimulationDataContainer {
    * @brief Get faceflux (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline std::vector<double>& faceflux() {
     return *faceflux_ref_;
   }
@@ -230,6 +236,7 @@ class SimulationDataContainer {
    * @brief Get pressure (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline const std::vector<double>& pressure() const {
       return *pressure_ref_;
   }
@@ -238,6 +245,7 @@ class SimulationDataContainer {
    * @brief Get temperature (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline const std::vector<double>& temperature() const {
     return *temperature_ref_;
   }
@@ -246,6 +254,7 @@ class SimulationDataContainer {
    * @brief Get saturation (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline const std::vector<double>& saturation() const {
     return *saturation_ref_;
   }
@@ -254,6 +263,7 @@ class SimulationDataContainer {
    * @brief Get facepressure (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline const std::vector<double>& facepressure() const {
     return *facepressure_ref_;
   }
@@ -262,6 +272,7 @@ class SimulationDataContainer {
    * @brief Get faceflux (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   inline const std::vector<double>& faceflux() const {
     return *faceflux_ref_;
   }
@@ -270,12 +281,14 @@ class SimulationDataContainer {
    * @brief Get cell data set (immutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   const std::map<std::string, std::vector<double>>& cellData() const;
 
   /**
    * @brief Get cell data set (mutable)
    * @deprecated will eventually be moved to concrete subclasses
    */
+  __attribute__((deprecated))
   std::map<std::string, std::vector<double>>& cellData();
 
  private:
@@ -283,6 +296,7 @@ class SimulationDataContainer {
    * @brief Adds default fields 
    * @deprecated It should not be used any more.
    */
+  __attribute__((deprecated))
   void addDefaultFields();
 
   /**

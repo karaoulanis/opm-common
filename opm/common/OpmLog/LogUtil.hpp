@@ -61,14 +61,14 @@ const int64_t StdoutMessageTypes = MessageType::Info
 /// Terminal codes for ANSI/vt100 compatible terminals.
 /// See for example http://ascii-table.com/ansi-escape-sequences.php
 namespace AnsiTerminalColors {
-const std::string none = "\033[0m";
-const std::string red = "\033[31m";
-const std::string red_strong = "\033[31;1m";
-const std::string yellow = "\033[33m";
-const std::string yellow_strong = "\033[33;1m";
-const std::string blue = "\033[34m";
-const std::string blue_strong = "\033[34;1m";
-const std::string default_color = "\033[39m";
+const char none[] = "\033[0m";
+const char red[] = "\033[31m";
+const char red_strong[] = "\033[31;1m";
+const char yellow[] = "\033[33m";
+const char yellow_strong[] = "\033[33;1m";
+const char blue[] = "\033[34m";
+const char blue_strong[] = "\033[34;1m";
+const char default_color[] = "\033[39m";
 }  // namespace AnsiTerminalColors
 
 bool isPower2(int64_t x);

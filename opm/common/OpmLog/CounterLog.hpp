@@ -37,16 +37,66 @@ namespace Opm {
  */
 class CounterLog : public LogBackend {
  public:
-  explicit CounterLog(int64_t messageMask);
+  /**
+   * @brief Construct a counter log.
+   */
   CounterLog();
+
+  /**
+   * @brief Construct a counter log given a messaqge mask
+   * @param  messageMask the message mask
+   * @note Message mask is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit
+   */
+  explicit CounterLog(int64_t messageMask);
+
+  /**
+   * @brief gewt the number of messages that are of given message type
+   * @param  messageType type message type
+   * @note Message type is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit
+   */
   size_t numMessages(int64_t messageType) const;
+
+  /**
+   * @brief Clear the message counter.
+   */
   void clear();
 
  protected:
+  /**
+   * @brief Add a message to the log.
+   * @param messageFlag the message flag
+   * @param message the message
+   * @note Message flag is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit
+   */
   void addMessageUnconditionally(int64_t messageFlag,
                                 const std::string& message) override;
+
  private:
-    std::map<int64_t , size_t> m_count;
+    std::map<int64_t , size_t> m_count;  //!< count messages acc. to their flags
 };
 }  // namespace Opm
 #endif

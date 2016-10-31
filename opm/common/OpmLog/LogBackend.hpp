@@ -30,14 +30,22 @@
 namespace Opm {
 /**
  * @class LogBackend
- * @file Abstract interface class for log backends.
- * @brief 
+ * @brief Abstract interface class for log backends.
  */
 class LogBackend {
  public:
   /**
    * @brief Construct with given message mask.
    * @param mask the mask of the log back end
+   * @note Message mask is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit.
    */
   explicit LogBackend(int64_t mask);
 
@@ -72,6 +80,15 @@ class LogBackend {
    * @param messageFlag the message flag
    * @param messageTag the message tag
    * @param message the message
+   * @note Message tag is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit.
    */
   void addTaggedMessage(int64_t messageFlag,
                         const std::string& messageTag,
@@ -81,17 +98,15 @@ class LogBackend {
   /**
    * @brief Get the message mask.
    * @return an integer as described in Opm::Log::MessageType namespace,
-   *         in file LogUtils.hpp.
-   * 
-   *         More specifically:
-   *         - Debug     =  1   Excessive information
-   *         - Note      =  2;  Information that should only go into print file
-   *         - Info      =  4;  Normal status information
-   *         - Warning   =  8;  Input anomaly - possible error
-   *         - Error     = 16;   Error in the input data - should probably exit
-   *         - Problem   = 32;   Calculation problems - e.g. convergence failure
-   *         - Bug       = 64;   An inconsistent state has been encountered in
-   *                             the simulator - should probably exit.
+   * @note Message mask is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit.
    */
   int64_t getMask() const;
 
@@ -100,9 +115,15 @@ class LogBackend {
    * @brief Add a message to the log.
    * @param messageFlag the message flag
    * @param message the message
-   * @note This is the method subclasses should override.
-   *       Typically a subclass may filter, change, and output
-   *       messages based on configuration and the messageFlag.
+   * @note Message flag is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit.
    */
   virtual void addMessageUnconditionally(int64_t messageFlag,
                                          const std::string& message) = 0;
@@ -112,7 +133,15 @@ class LogBackend {
    *        configureDecoration() arguments.
    * @param messageFlag the message flag
    * @param message the message
-   * @return 
+   * @note Message flag is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit.
    */
   std::string formatMessage(int64_t messageFlag, const std::string& message);
 
@@ -120,9 +149,18 @@ class LogBackend {
   /**
    * @brief Check whether to include a message.
    * @param messageFlag the message flag
-   * @param message the message
+   * @param messageTag the message tag
    * @return True if all bits of messageFlag are also set in our mask,
    *         and the message limiter returns a PrintMessage response.
+   * @note Message flag is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit.
    */
   bool includeMessage(int64_t messageFlag, const std::string& messageTag);
 

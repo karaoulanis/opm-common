@@ -18,7 +18,7 @@
 */
 
 /**
- *  The Eclipse PRT log class. 
+ *  The Eclipse PRT log class.
  */
 
 #ifndef ECLIPSEPRTLOG_H
@@ -30,16 +30,19 @@
 
 namespace Opm {
 class EclipsePRTLog : public StreamLog {
+  /**
+   * @brief The Eclipse PRT log class.
+   */
  public:
   /**
-   * @brief Construct a logger to the <MODEL>.PRT file
+   * @brief Construct a logger to the MODEL.PRT file
    * @param logFile the name of the logfile to use
    * @param messageMask an integer as described in Opm::Log::MessageType
    *                     namespace, in file LogUtils.hpp.
    * @param append if true then we append messages to the file;
    *               otherwise a new file is created
    * @param print_summary if true print a summary to the PRT file
-   * @note The message type is defined as follows:
+   * @note Message mask is one of the following:
    *       - Debug     =  1   Excessive information
    *       - Note      =  2;  Information that should only go into print file
    *       - Info      =  4;  Normal status information
@@ -53,12 +56,12 @@ class EclipsePRTLog : public StreamLog {
                 bool append, bool print_summary);
 
   /**
-   * @brief Construct a logger to the <MODEL>.PRT file
+   * @brief Construct a logger to the MODEL.PRT file
    * @param os the output stream to be used
    * @param messageMask an integer as described in Opm::Log::MessageType
    *                     namespace, in file LogUtils.hpp.
    * @param print_summary if true print a summary to the PRT file
-   * @note The message type is defined as follows:
+   * @note Message mask is one of the following:
    *       - Debug     =  1   Excessive information
    *       - Note      =  2;  Information that should only go into print file
    *       - Info      =  4;  Normal status information
@@ -68,7 +71,7 @@ class EclipsePRTLog : public StreamLog {
    *       - Bug       = 64;   An inconsistent state has been encountered in
    *                           the simulator - should probably exit.
    */
-  EclipsePRTLog(std::ostream& os , int64_t messageMask,
+  EclipsePRTLog(std::ostream& os, int64_t messageMask,
                 bool print_summary);
 
   /**
@@ -79,7 +82,7 @@ class EclipsePRTLog : public StreamLog {
   /**
    * @brief Get the messages that are characterized by a given message type.
    * @param messageType the message type
-   * @note The message type is defined as follows:
+   * @note Message type is one of the following:
    *       - Debug     =  1   Excessive information
    *       - Note      =  2;  Information that should only go into print file
    *       - Info      =  4;  Normal status information
@@ -87,7 +90,7 @@ class EclipsePRTLog : public StreamLog {
    *       - Error     = 16;   Error in the input data - should probably exit
    *       - Problem   = 32;   Calculation problems - e.g. convergence failure
    *       - Bug       = 64;   An inconsistent state has been encountered in
-   *                           the simulator - should probably exit.
+   *                           the simulator - should probably exit
    */
   size_t numMessages(int64_t messageType) const;
 
@@ -96,9 +99,15 @@ class EclipsePRTLog : public StreamLog {
    * @brief Add a message to the log.
    * @param messageType the message flag
    * @param message the message
-   * @note This is the method from the base class that should be overriden.
-   *       Typically a subclass may filter, change, and output
-   *       messages based on configuration and the messageType.
+   * @note Message type is one of the following:
+   *       - Debug     =  1   Excessive information
+   *       - Note      =  2;  Information that should only go into print file
+   *       - Info      =  4;  Normal status information
+   *       - Warning   =  8;  Input anomaly - possible error
+   *       - Error     = 16;   Error in the input data - should probably exit
+   *       - Problem   = 32;   Calculation problems - e.g. convergence failure
+   *       - Bug       = 64;   An inconsistent state has been encountered in
+   *                           the simulator - should probably exit
    */
   void addMessageUnconditionally(int64_t messageType,
                                  const std::string& message) override;
